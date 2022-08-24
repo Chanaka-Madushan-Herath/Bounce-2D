@@ -26,21 +26,9 @@ let dy = -3;
 let paddleX = (canvas.width - paddleWidth) / 2;
 let boxCount = 0;
 let score = 0;
+let highScore;
 let lives = 3;
 let boxes = [];
-
-const getHigherScore = () => {
-    let name = "Higher_Score=";
-    let string = document.cookie.split(';');
-    for (let i = 0; i < string.length; i++) {
-        let c = string[i];
-        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-        if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
-    }
-    return "0";
-}
-
-let highScore = getHigherScore();
 
 for (let row = 0; row < boxRowCount; row++) {
     boxes[row] = [];
@@ -164,9 +152,20 @@ const collisionDetector = () => {
     }
 }
 
+const getHigherScore = () => {
+    let name = "Higher_Score=";
+    let string = document.cookie.split(';');
+    for (let i = 0; i < string.length; i++) {
+        let c = string[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+    }
+    return "0";
+}
 
 const draw = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    highScore = getHigherScore();
     createScoreBoard();
     createBoxes();
     createBall();
